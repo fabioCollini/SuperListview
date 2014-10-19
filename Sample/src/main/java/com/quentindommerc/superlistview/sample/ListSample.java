@@ -9,7 +9,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.quentindommerc.superlistview.OnMoreListener;
-import com.quentindommerc.superlistview.SuperGridview;
 import com.quentindommerc.superlistview.SuperListview;
 import com.quentindommerc.superlistview.SwipeDismissListViewTouchListener;
 
@@ -18,6 +17,7 @@ import java.util.ArrayList;
 
 public class ListSample extends Activity implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener {
 
+    public static final int ITEMS_PER_PAGE = 20;
     private SuperListview mList;
     private ArrayAdapter<String> mAdapter;
 
@@ -47,9 +47,9 @@ public class ListSample extends Activity implements SwipeRefreshLayout.OnRefresh
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mAdapter.add("More stuff");
-                        mAdapter.add("More stuff");
-                        mAdapter.add("More stuff");
+                        for (int i = 1; i <= ITEMS_PER_PAGE; i++) {
+                            mAdapter.add("Item " + i);
+                        }
 
                         mList.setAdapter(mAdapter);
 
@@ -88,22 +88,27 @@ public class ListSample extends Activity implements SwipeRefreshLayout.OnRefresh
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-
                 // demo purpose, adding to the top so you can see it
                 mAdapter.insert("New stuff", 0);
 
             }
         }, 2000);
-
-
     }
 
     @Override
-    public void onMoreAsked(int numberOfItems, int numberBeforeMore, int currentItemPos) {
+    public void onMoreAsked(final int numberOfItems, int numberBeforeMore, int currentItemPos) {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (numberOfItems < 60) {
+                    //demo purpose, adding to the bottom
+                    for (int i = 1; i <= ITEMS_PER_PAGE; i++) {
+                        mAdapter.add("Item " + (numberOfItems + i));
+                    }
+                }
+                mList.hideMoreProgress();
+            }
+        }, 2000);
 
-        Toast.makeText(this, "More", Toast.LENGTH_LONG).show();
-
-        //demo purpose, adding to the bottom
-        mAdapter.add("More asked, more served");
     }
 }
