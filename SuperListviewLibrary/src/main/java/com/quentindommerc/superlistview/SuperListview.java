@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
 import com.quentindommerc.superlistview.superlistview.R;
 
 
@@ -61,7 +62,7 @@ public class SuperListview extends BaseSuperAbsListview {
 
             mList.setClipToPadding(mClipToPadding);
 
-            getList().setDivider(mDivider);
+            getList().setDivider(new ColorDrawable(mDivider));
             getList().setDividerHeight((int) mDividerHeight);
 
             mList.setOnScrollListener(this);
