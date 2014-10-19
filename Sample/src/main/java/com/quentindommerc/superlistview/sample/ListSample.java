@@ -35,29 +35,15 @@ public class ListSample extends Activity implements SwipeRefreshLayout.OnRefresh
         // This is what you're looking for
         mList = (SuperListview)findViewById(R.id.list);
 
-        Thread thread = new Thread( new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                for (int i = 1; i <= ITEMS_PER_PAGE; i++) {
+                    mAdapter.add("Item " + i);
                 }
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (int i = 1; i <= ITEMS_PER_PAGE; i++) {
-                            mAdapter.add("Item " + i);
-                        }
-
-                        mList.setAdapter(mAdapter);
-
-                    }
-                });
+                mList.setAdapter(mAdapter);
             }
-        });
-        thread.start();
+        }, 2000);
 
         // Setting the refresh listener will enable the refresh progressbar
         mList.setRefreshListener(this);
@@ -85,8 +71,7 @@ public class ListSample extends Activity implements SwipeRefreshLayout.OnRefresh
         Toast.makeText(this, "Refresh", Toast.LENGTH_LONG).show();
 
         // enjoy the beaty of the progressbar
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             public void run() {
                 // demo purpose, adding to the top so you can see it
                 mAdapter.insert("New stuff", 0);
@@ -97,8 +82,7 @@ public class ListSample extends Activity implements SwipeRefreshLayout.OnRefresh
 
     @Override
     public void onMoreAsked(final int numberOfItems, int numberBeforeMore, int currentItemPos) {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             public void run() {
                 if (numberOfItems < 60) {
                     //demo purpose, adding to the bottom
