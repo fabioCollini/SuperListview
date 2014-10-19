@@ -89,8 +89,10 @@ public class ListSample extends Activity implements SwipeRefreshLayout.OnRefresh
                     for (int i = 1; i <= ITEMS_PER_PAGE; i++) {
                         mAdapter.add("Item " + (numberOfItems + i));
                     }
+                    mList.hideMoreProgress(true);
+                } else {
+                    mList.hideMoreProgress(false);
                 }
-                mList.hideMoreProgress();
             }
         }, 2000);
 

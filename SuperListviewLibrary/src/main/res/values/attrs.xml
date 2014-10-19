@@ -4,7 +4,9 @@
     <declare-styleable name="superlistview">
         <attr name="superlv__listSelector" format="reference"/>
         <attr name="superlv__empty" format="reference"/>
+        <attr name="superlv__error" format="reference"/>
         <attr name="superlv__moreProgress" format="reference"/>
+        <attr name="superlv__moreError" format="reference"/>
         <attr name="superlv__progress" format="reference"/>
         <attr name="superlv__listDivider" format="reference"/>
         <attr name="superlv__listDividerHeight" format="dimension"/>
